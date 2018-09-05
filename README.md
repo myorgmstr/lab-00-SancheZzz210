@@ -46,10 +46,10 @@ struct Entity
 };
 ```
 
-Все `Entity` будут храниться в `std::multi_map<std::string, Entity>`, где ключ, это текущее слово, а значение - соответсвующие этому слову `Entity`.
+Все `Entity` будут храниться в `std::multimap<std::string, Entity>`, где ключ, это текущее слово, а значение - соответсвующие этому слову `Entity`.
 
 ```cpp
-std::multi_map<std::string, Entity> dict;
+std::multimap<std::string, Entity> dict;
 dict["добрый"] = {"сок", 0.07};
 dict["добрый"] = {"вечер", 0.1};
 dict["добрый"] = {"утро", 0.01};
@@ -58,14 +58,19 @@ dict["спокойной"] = {"сок", 0.21};
 dict["спокойного"] = {"сна", 0.11};
 ```
 
-Вам требуется написать фунцию, которая вернет отсортированный по частоте массив `Entity` по заданному ключу.
-
+Вам требуется реализовать функцию загрузки словаря из файла, который предоставил аналитик.
 ```cpp
-using Dict = std::multi_map<std::string, Entity>;
+std::multimap<std::string, Entity> load(const std::string & filename);
+```
+
+Также необходимо реализовать фунцию, которая вернет отсортированный по частоте массив `Entity` по заданному ключу.
+```cpp
+using Dict = std::multimap<std::string, Entity>;
 std::vector<Entity> suggest(const Dict&, const std::string& current_word);
 ```
 Пример
 ```cpp
+auto dict = load("db.txt");
 auto result = suggest(dict, "добрый");
 // result == {"вечер", 0.1}, {"сок", 0.07}, {"человек", 0.02}, {"утро", 0.01}
 ```
